@@ -28,7 +28,6 @@ streamlit.header("Fruityvice Fruit Advice!")
 
 ##call the data from the api link
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-streamlit.text(fruityvice_response.json()) #just writes the data on to the screen
 
 #take thejson file and normalize it to make it human readable
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
