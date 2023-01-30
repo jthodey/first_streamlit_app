@@ -1,5 +1,6 @@
-import streamlit
-import pandas
+import streamlit ## contects to the streamlit app
+import pandas ## enables data changes and visualized for table
+import requests ## enables calls to apis 
 
 #Set up the text on the webapp
 streamlit.title("My Mom's New Healthy Diner") 
@@ -10,7 +11,7 @@ streamlit.text('🐔 Hard-Boiled Free-Range Egg')
 streamlit.text('🥑🍞 Avocado Toast') 
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 
-#import dataframe from se server
+#import dataframe from the server as, pull from a csv
 ##import the data
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index("Fruit")
@@ -22,10 +23,16 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 ##display the table on the page
 streamlit.dataframe(fruits_to_show)
 
-##new section to display fruitvice api response
+##new section to call and display fruitvice api response
 streamlit.header("Fruityvice Fruit Advice!")
 
-import requests
+##call the data from the api link
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-streamlit.text(fruityvice_response.json())
+streamlit.text(fruityvice_response.json()) #just writes the data on to the screen
+
+#take thejson file and normalize it to make it human readable
+fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+streamlit.dataframe(fruityvice_normalized)
+
+
 
