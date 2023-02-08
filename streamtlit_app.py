@@ -1,6 +1,8 @@
 import streamlit ## contects to the streamlit app
 import pandas ## enables data changes and visualized for table
 import requests ## enables calls to apis 
+import snowflake.connector ## establish the connection to snowflake. Note that the requirements doc is used to say we use python
+from urllib.error import URLError
 
 #Set up the text on the webapp
 streamlit.title("My Mom's New Healthy Diner") 
@@ -35,8 +37,8 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_cho
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 streamlit.dataframe(fruityvice_normalized)
 
-## establish the connection to snowflake. Note that the requirements doc is used to say we use python
-import snowflake.connector
+#dont run anything past this line while we troubleshoot
+streamlit.stop
 
 ## query data from snowflake in our streamlit app
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
